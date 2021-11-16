@@ -1,0 +1,16 @@
+#upload-data {
+  margin-top: 10px;
+  height: 350px;
+  font-size: 22px;
+  font-weight: 600;
+  border: none;
+  background-color: $color-2 !important;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  @include flex-centered;
+}
+
+.header {
+  color: $color-3;
+  text-align: center;
+}

@@ -1,0 +1,42 @@
+// mixins
+@import '0-plugins/mixins/absolute_positioning';
+@import '0-plugins/mixins/breakpoints';
+@import '0-plugins/mixins/center';
+@import '0-plugins/mixins/flexbox';
+@import '0-plugins/mixins/font-size';
+@import '0-plugins/mixins/gradient';
+@import '0-plugins/mixins/positioning';
+@import '0-plugins/mixins/prefix';
+@import '0-plugins/mixins/size';
+@import '0-plugins/mixins/transition';
+
+// base
+@import '1-base/variables';
+@import '1-base/layout';
+@import '1-base/datepicker';
+@import '1-base/table';
+@import '1-base/typography';
+
+// components
+@import '2-components/dash-graph';
+@import '2-components/datepicker';
+@import '2-components/dbc-dropdown';
+@import '2-components/dcc-dropdown';
+@import '2-components/file-upload';
+@import '2-components/switch';
+@import '2-components/switch-group';
+@import '2-components/upload-box';
+
+// modules
+@import '3-modules/accounts-row';
+@import '3-modules/extended-cards';
+@import '3-modules/login';
+@import '3-modules/page-layout';
+@import '3-modules/sidebar';
+
+//pages
+@import '4-pages/upload-data';
+@import '4-pages/admin-page';
+
+//Utilities
+@import '5-utilities/utilities';

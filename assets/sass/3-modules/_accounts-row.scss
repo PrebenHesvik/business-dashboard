@@ -1,0 +1,7 @@
+.select-accounts-row {
+  margin-bottom: $medium-spacing;
+
+  @include breakpoint(viewport-19) {
+    margin: 0 10% $large-spacing 10%;
+  }
+}

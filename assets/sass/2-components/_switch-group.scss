@@ -1,0 +1,21 @@
+.switch-group {
+  background: transparent !important;
+  text-align: center;
+  margin-bottom: $large-spacing;
+  max-width: 720px !important;
+
+  // Heading above switch-controls
+  H6, label {
+    color: $color-3;
+    font-size: 19px;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-bottom: $small-spacing;
+    font-family: $heading-font-family;
+  }
+
+  // text underneath radio-buttons/switches
+  .form-text {
+    font-size: 13px;
+  }
+}

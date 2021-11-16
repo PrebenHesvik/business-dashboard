@@ -1,0 +1,22 @@
+.datepicker,
+  .SingleDatePicker,
+  .SingleDatePicker_1,
+  .DateInput,
+  .DateInput_input,
+  .DateInput_1,
+  .SingleDatePickerInput
+  {
+    font-weight: 600;
+    background: transparent !important;
+    color: $dropdown-color;
+    @include font-size($dropdown-font-size-map);
+  }
+
+  .CalendarMonth_table,
+  .CalendarMonth_table_1,
+  .CalendarDay,
+  .CalendarDay_1,
+  .CalendarDay__default,
+  .CalendarDay__default_2 {
+    color: $color-2 !important;
+  }

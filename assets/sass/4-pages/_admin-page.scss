@@ -1,0 +1,130 @@
+// Admin page
+
+.centered {
+  padding: 50px;
+  border-radius: 10px;
+  background: darken($color-2, 2%);
+  width: 1200px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+  @include center-block;
+  @include center-vertically;
+  @include flex-centered;
+  @include flex-direction(column);
+}
+
+.admin-page-title {
+  margin-bottom: 20px;
+  font-size: 36px !important;
+  color: $color-5 !important;
+  border-bottom: 2px solid darken($color-3, 45%);
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.admin-title-row {
+  width: 100%;
+}
+
+#user-registration {
+  margin-bottom: 75px;
+  width: 100%;
+
+  form {
+    width: 100%;
+    @include flexbox;
+    @include justify-content('space-between');
+  }
+
+  .form-group {
+    width: 30%;
+    margin-right: 30px;
+
+    .form-control {
+      width: 100%;
+      height: 45px;
+      font-size: 18px;
+      color: $color-3 !important;
+      background: transparent;
+      border: 1px solid darken($color-3, 40%);
+    }
+
+    label {
+      font-size: 20px;
+      font-weight: 600;
+      margin-left: -30px;
+      color: $color-3;
+    }
+  }
+
+  button {
+    margin-top: 45px;
+    width: 32%;
+    height: 45px;
+    border: none;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    color: $color-3;
+    font-weight: 600;
+    font-size: 20px;
+    @include gradient($color-5, rgba($color-5, 0.2), radial);
+  }
+}
+
+#remove-user {
+  width: 100%;
+  //min-width: 1000px;
+  margin-bottom: 75px;
+
+  .col-8 {
+    padding: 0px 35px 0 0 !important;
+    // margin-left: 0px !important;
+
+    select {
+      margin-left: 0px !important;
+      height: 45px;
+      font-size: 20px;
+      color: $color-3 !important;
+      border: 1px solid darken($color-3, 40%);
+    }
+  }
+
+  .col-4 {
+    padding: 0;
+  }
+
+  #delete-user-btn {
+    width: 99%;
+    height: 45px;
+    border: none;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    color: $color-3;
+    font-weight: 600;
+    font-size: 20px;
+    margin-left: -20px !important;
+    @include gradient($color-8, rgba($color-8, 0.2), radial);
+  }
+}
+
+#all-users {
+  width: 100%;
+
+  ul {
+    width: 100%;
+    @include flexbox;
+    @include flex-wrap(wrap);
+  }
+
+  li {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 15px !important;
+    border-radius: 5px;
+    font-weight: 600;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+    height: 45px;
+    font-size: 18px;
+    color: $color-3 !important;
+    background: $color-1;
+    border: none !important;
+    width: 32%;
+  }
+}

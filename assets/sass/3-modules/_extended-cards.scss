@@ -1,0 +1,39 @@
+// Box containing drop-down menus at the top of each page
+.extended-cards-row {
+  margin-bottom: $large-spacing;
+  border-radius: 5px;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2);
+  @include gradient($color-4, rgba($color-3, 0.12), radial);
+
+  @include breakpoint(viewport-19) {
+    margin: 0 10% $large-spacing 10%;
+  }
+}
+
+.extended-cards {
+  background: transparent;
+
+  .list-group-item {
+    text-align: center;
+    flex-grow: 1 !important;
+    background: transparent;
+    border: none;
+  }
+
+  .list-group-item:not(:first-child) {
+    border-left: 1px solid darken($color-4, 10%);
+  }
+
+  .list-group-item:not(:last-child) {
+    border-right: 2px solid lighten($color-4, 3%);
+  }
+
+  .list-group-item-heading {
+    padding-top: 5px;
+    color: $dropdown-heading-color;
+    opacity: 0.8;
+    font-weight: 600;
+    min-width: 100%;
+    @include font-size($dropdown-heading-font-size-map);
+  }
+}

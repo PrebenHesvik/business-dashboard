@@ -1,0 +1,40 @@
+.switch {
+  background: transparent !important;
+}
+
+.form-check-input ~ .form-check-label {
+  color: $color-3;
+  font-weight: 600;
+  opacity: 0.6;
+  text-transform: uppercase;
+  vertical-align: middle !important;
+  @include font-size($switches-font-size-map);
+}
+
+.switch .custom-control-input:checked ~ .custom-control-label,
+.form-switch .form-check-input:checked ~ .form-check-label {
+  opacity: 1;
+  vertical-align: middle !important;
+}
+
+.form-check-input:checked {
+  background-color: $accent-color !important;
+  border-color: $accent-color !important;
+}
+
+.form-check-input:not(:checked) {
+  background-color: lighten($color-2, 15%) !important;
+  border-color: lighten($color-2, 5%) !important;
+}
+
+.form-switch {
+  margin-right: 25px !important;
+
+  @include breakpoint(viewport-14) {
+    margin-right: 30px !important;
+  }
+
+  @include breakpoint(viewport-19) {
+    margin-right: 50px !important;
+  }
+}

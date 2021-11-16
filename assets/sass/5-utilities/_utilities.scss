@@ -1,0 +1,13 @@
+.flex-grow-2 {
+    flex-grow: 2 !important;
+    flex-basis: 40%;
+
+    @include breakpoint(viewport-14) {
+    flex-basis: 35%;
+  }
+  @include breakpoint(viewport-19) {
+    flex-basis: auto;
+  }
+}
+
+

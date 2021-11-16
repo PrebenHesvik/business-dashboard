@@ -1,0 +1,19 @@
+/* Set the current outer border to 0 because it's messed up,
+and put the FLATLY properties inside the DateInput_input class
+which works well instead. */
+.SingleDatePickerInput {
+  border: none;
+}
+
+/* Fix box width of datepicker to be 100% of parent container*/
+.DateInput,
+.DateInput_1 {
+  width: 100% !important;
+}
+
+/* Fix the font size and other stuff of datepicker*/
+.DateInput_input,
+.DateInput_input_1 {
+  text-align: center;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}

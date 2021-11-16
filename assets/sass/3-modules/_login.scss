@@ -1,0 +1,45 @@
+#login-form-container {
+  height: 85vh;
+  @include flex-centered;
+
+  #login-form {
+    min-width: 550px;
+  }
+
+  .form-group {
+    margin: 10px 0;
+  }
+
+  .login-title {
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 600;
+    font-size: 32px;
+    color: $color-5;
+  }
+
+  input {
+    background: lighten($color-2, 7%);
+    color: $color-3;
+    font-size: 20px;
+    border: none;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  label {
+    font-size: 20px;
+    font-weight: 600;
+    padding-left: 0;
+  }
+
+  .form-button {
+    background: $color-5;
+    border: none;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+    color: $color-3;
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 30px;
+    @include gradient($color-4, rgba($color-4, 0.2), radial);
+  }
+}

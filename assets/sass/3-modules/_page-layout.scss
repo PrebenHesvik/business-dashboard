@@ -1,0 +1,20 @@
+#react-entry-point {
+  min-height: 100vh;
+  @include gradient(lighten($color-1, 10%), $color-1, radial);
+}
+
+#_dash-app-content {
+  min-height: 100%;
+  @include gradient(lighten($color-1, 10%), $color-1, radial);
+}
+
+#page-content {
+  margin-right: 2rem;
+  height: 100%;
+  @include breakpoint(viewport-7) {
+    margin-left: 7rem;
+  }
+}
+
+
+
