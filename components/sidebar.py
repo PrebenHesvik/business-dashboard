@@ -34,12 +34,11 @@ NavLink = namedtuple('NavLink', 'class_name href id')
 
 nav_links = [
     NavLink('fas fa-money-check-alt', '/page-1', 'page-1-link'),
-    NavLink('fas fa-truck-moving', '/page-2', 'page-2-link'),
-    NavLink('fas fa-coins', '/page-3', 'page-3-link'),
-    NavLink('fas fa-building', '/page-4', 'page-4-link'),
-    NavLink('fas fa-file-upload', '/page-5', 'page-5-link'),
-    NavLink('fas fa-users', '/page-6', 'page-6-link'),
-    NavLink('fas fa-arrow-circle-left', '/page-7', 'page-7-link'),
+    NavLink('fas fa-coins', '/page-2', 'page-2-link'),
+    NavLink('fas fa-building', '/page-3', 'page-3-link'),
+    NavLink('fas fa-file-upload', '/page-4', 'page-4-link'),
+    NavLink('fas fa-users', '/page-5', 'page-5-link'),
+    NavLink('fas fa-arrow-circle-left', '/page-6', 'page-6-link'),
 ]
 
 # Create a react NavLink component for each namedtuple in nav_links

@@ -31,4 +31,4 @@ def radio_check(
             form_group, id=col_id, className=col_class_name,
             width=col_width, xl=col_width_xl)
     else:
-        return form_group
+        return element

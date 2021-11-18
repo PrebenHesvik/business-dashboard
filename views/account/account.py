@@ -2,13 +2,11 @@
 from dash import dcc
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
-from flatten_dict import flatten
 
 from app import app
 
 from plotly_chart_generator import (
     bar_chart,
-    line_chart,
     chart_styles,
 )
 
@@ -25,22 +23,13 @@ from functions import filter_dataframe
 
 from .components_modules import (
     acct_dict,
-    account_categories,
-    show,
-    frequency,
-    years_checkboxes,
-    factory_checkboxes,
     layout
 )
 
-from .functions import (
-    groupby,
-    pivot,
-    supplier_pmt_terms,
-    transpose_sort_delete,
-    wa_pmt_terms,
-)
-#from . aggregations import create_traces
+from .functions.group_by_location import group_by_location
+from .functions.group_by_category import group_by_category
+from .functions.group_by_supplier import group_by_supplier
+from .functions.func_df_wa_pmt_terms import weighted_average_pmt_terms
 
 
 @ app.callback(
@@ -122,56 +111,9 @@ def main_chart(years, locations, show, frequency,
         [type]
     """
 
-    # print(locals())
 
     # filter dataframe
-    fd = filter_dataframe(transactions, years, locations, frequency)
-
-    if not any([cat_4 == '', cat_4 == 'Alle']):
-        accounts = acct_dict[cat_1][cat_2][cat_3][cat_4]
-
-        # group data by location
-        df_group_by_loc = pivot(
-            fd, accounts, show, frequency, 'Lokasjon')
-
-    elif not any([cat_3 == '', cat_3 == 'Alle']):
-        accounts = acct_dict[cat_1][cat_2][cat_3]
-
-        if not isinstance(accounts, int):
-            account_list = flatten(accounts).values()
-
-            # data for chart group_by_loc
-            df_group_by_loc = pivot(
-                fd, account_list, show, frequency, 'Lokasjon')
-
-        else:
-            # data for chart group_by_loc
-            df_group_by_loc = pivot(
-                fd, accounts, show, frequency, 'Lokasjon')
-
-    elif not any([cat_2 == '', cat_2 == 'Alle']):
-        d = acct_dict[cat_1][cat_2]
-
-        # data for chart grpby_loc
-        accounts = flatten(d).values()
-        df_group_by_loc = pivot(
-            fd, accounts, show, frequency, 'Lokasjon')
-
-    elif cat_2 == 'Alle':
-        d = acct_dict[cat_1]
-
-        # data for chart grpby_loc
-        accounts = flatten(d).values()
-        df_group_by_loc = pivot(
-            fd, accounts, show, frequency, 'Lokasjon')
-
-    elif cat_1 == 'Alle':
-        # data for chart group_by_loc
-        accounts = flatten(acct_dict).values()
-        df_group_by_loc = pivot(
-            fd, accounts, show, frequency, 'Lokasjon')
-
-    # chart layouts
+    df = filter_dataframe(transactions, years, locations, frequency)
 
     # set title on charts group_by_loc and group_by_cat
     cats = [cat for cat in [cat_1, cat_2, cat_3, cat_4] if cat != '']
@@ -185,8 +127,16 @@ def main_chart(years, locations, show, frequency,
     title = f'{string} {show}'
     substr_title = title.split("/")[0]
 
+    df_group_by_loc = group_by_location(df, show, frequency, cat_1, cat_2, cat_3, cat_4)
+    data_group_by_cat = group_by_category(df, show, frequency, cat_1, cat_2, cat_3, cat_4)
+    df_group_by_sup = group_by_supplier(df, show, frequency, cat_1, cat_2, cat_3, cat_4)
+    df_wa_pmt_terms = weighted_average_pmt_terms(df, frequency, cat_1, cat_2, cat_3, cat_4, data_group_by_cat)
+
     chart_data = [
         (df_group_by_loc, f'{title} - gruppert etter fabrikk'),
+        (data_group_by_cat, f'{title} - gruppert etter kategori'),
+        (df_group_by_sup, f'{substr_title} - gruppert etter leverandør'),
+        (df_wa_pmt_terms, 'Vektede betalingsbetingelser - gruppert etter kategori'),
     ]
 
     charts = []

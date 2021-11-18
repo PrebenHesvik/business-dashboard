@@ -30,13 +30,11 @@ def groupby(df, accounts, show, frequency, group_by='grouper'):
     elif 'Faktura' in show:
         return (
             data
-            .drop_duplicates(subset=[
-                'Partner', 'Referansenummer'])
+            .drop_duplicates(subset=['Partner', 'Referansenummer'])
             .groupby(group_by, observed=True)[['Partner']]
             .count())
     else:
         return (
             data
-            .groupby(
-                group_by, observed=True)[['Partner']]
+            .groupby(group_by, observed=True)[['Partner']]
             .nunique())
