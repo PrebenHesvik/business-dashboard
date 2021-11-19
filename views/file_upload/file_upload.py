@@ -14,14 +14,11 @@ from dash import dcc, html
 
 from plotly_chart_generator import (
     bar_chart,
-    line_chart,
     chart_styles,
 )
 
 from chart_configs import (
     single_color,
-    highlight_color,
-    multi_color,
     common_layout_args,
     display_chart
 )
@@ -83,9 +80,8 @@ def return_success(data, category):
 
 
 PATH = pathlib.Path(__file__).parent
-#DATA_PATH = PATH.joinpath("datasets").resolve()
-#DF = pd.read_parquet(DATA_PATH.joinpath("transactions.parquet"))
-
+base_dir = pathlib.Path(__file__).parent.parent.parent
+#print(base_dir)
 
 def parse_contents(category, contents, filename, date):
     content_type, content_string = contents.split(',')
@@ -124,17 +120,19 @@ def parse_contents(category, contents, filename, date):
                 data = inetto_production(filename, decoded)
                 if isinstance(data, list):
                     return return_errors(data)
-                else:
-                    writer = pd.ExcelWriter('datasets/inetto_production.xlsx')
-                    data.to_excel(writer, index=True)
+                writer = pd.ExcelWriter('datasets/inetto_production.xlsx')
+                data.to_excel(writer, index=True)
 
         except Exception as e:
             print(e)
             print(traceback.print_exc())
-            return html.Div([
-                'There was an error processing this file.',
-                html.P(e), html.P(traceback.print_exc())
-            ])
+            return html.Div(
+                [
+                    'There was an error processing this file.',
+                    html.P(e),
+                    html.P(traceback.print_exc()),
+                ]
+            )
 
         return return_success(data, category)
 
@@ -146,9 +144,7 @@ def parse_contents(category, contents, filename, date):
                 State('upload-data', 'last_modified')])
 def update_output(category, list_of_contents, list_of_names, list_of_dates):
     if list_of_contents is not None:
-
-        children = [
+        return [
             parse_contents(category, c, n, d) for c, n, d in
-            zip(list_of_contents, list_of_names, list_of_dates)]
-
-        return children
+            zip(list_of_contents, list_of_names, list_of_dates)
+        ]

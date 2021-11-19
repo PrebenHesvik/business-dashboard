@@ -53,24 +53,15 @@ def toggle_active_links(pathname):
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     """Renders page content according to the link the user clicks"""
-    if pathname in ["/", "/login", "/page-1"]:
-        return main.layout
-    elif pathname == "/page-2":
-        return account.layout
-    elif pathname == "/page-3":
-        return supplier.layout
-    elif pathname == "/page-4":
-        return file_upload.layout
-
-    # match pathname:
-    #     case "/" | "/login" | "/page-1":
-    #         return main.layout
-    #     case "/page-2":
-    #         return account.layout
-    #     case "/page-3":
-    #         return supplier.layout
-    #     case "/page-4":
-    #         return file_upload.layout
+    match pathname:
+        case "/" | "/login" | "/page-1":
+            return main.layout
+        case "/page-2":
+            return account.layout
+        case "/page-3":
+            return supplier.layout
+        case "/page-4":
+            return file_upload.layout
 
     # If the user tries to reach a different page, return a 404 message
     return dbc.Jumbotron(

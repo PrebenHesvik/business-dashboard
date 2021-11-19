@@ -3,33 +3,21 @@ from dash import dcc
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 
+# From other modules/files
 from app import app
-
-from plotly_chart_generator import (
-    bar_chart,
-    chart_styles,
-)
-
-from chart_configs import (
-    single_color,
-    multi_color,
-    common_layout_args,
-    display_chart
-)
-
 from load_datasets import transactions
-
 from functions import filter_dataframe
-
 from .components_modules import (
     acct_dict,
     layout
 )
-
-from .functions.group_by_location import group_by_location
-from .functions.group_by_category import group_by_category
-from .functions.group_by_supplier import group_by_supplier
-from .functions.func_df_wa_pmt_terms import weighted_average_pmt_terms
+from .functions.aggregations import (
+    group_by_location,
+    group_by_category,
+    group_by_supplier,
+    weighted_average_pmt_terms
+)
+from .functions.create_charts import create_charts
 
 
 @ app.callback(
@@ -111,26 +99,27 @@ def main_chart(years, locations, show, frequency,
         [type]
     """
 
-
     # filter dataframe
     df = filter_dataframe(transactions, years, locations, frequency)
 
-    # set title on charts group_by_loc and group_by_cat
-    cats = [cat for cat in [cat_1, cat_2, cat_3, cat_4] if cat != '']
+    # account category dict
+    categories = [cat_1, cat_2, cat_3, cat_4]
 
+    # set title on charts group_by_loc and group_by_cat
+    cats = [cat for cat in categories if cat != '']
     if 'Alle' in cats:
         string = cats[cats.index('Alle') - 1]
         string = '' if string == 'Alle' else string + ' -'
     else:
         string = cats[-1]
-
     title = f'{string} {show}'
     substr_title = title.split("/")[0]
 
-    df_group_by_loc = group_by_location(df, show, frequency, cat_1, cat_2, cat_3, cat_4)
-    data_group_by_cat = group_by_category(df, show, frequency, cat_1, cat_2, cat_3, cat_4)
-    df_group_by_sup = group_by_supplier(df, show, frequency, cat_1, cat_2, cat_3, cat_4)
-    df_wa_pmt_terms = weighted_average_pmt_terms(df, frequency, cat_1, cat_2, cat_3, cat_4, data_group_by_cat)
+    df_group_by_loc = group_by_location(df, show, frequency, categories)
+    data_group_by_cat = group_by_category(df, show, frequency, categories)
+    df_group_by_sup = group_by_supplier(df, show, frequency, categories)
+    df_wa_pmt_terms = weighted_average_pmt_terms(
+        df, frequency, categories, data_group_by_cat)
 
     chart_data = [
         (df_group_by_loc, f'{title} - gruppert etter fabrikk'),
@@ -139,22 +128,4 @@ def main_chart(years, locations, show, frequency,
         (df_wa_pmt_terms, 'Vektede betalingsbetingelser - gruppert etter kategori'),
     ]
 
-    charts = []
-    for frame, title in chart_data:
-        cp = multi_color if frame.index.size > 1 else single_color
-
-        layout = chart_styles(
-            title=title.upper(),
-            color_palette=cp,
-            **common_layout_args
-        )
-
-        trace = bar_chart(df=frame)
-
-        fig = display_chart(traces=trace, layout=layout)
-
-        chart_obj = dbc.Col([dcc.Graph(figure=fig)], width=12)
-
-        charts.append(chart_obj)
-
-    return charts
+    return create_charts(chart_data)
