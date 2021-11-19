@@ -3,8 +3,10 @@ from ..components_modules import acct_dict
 from .pivot_func import pivot
 from .groupby_func import groupby
 from .transpose_sort_delete_func import transpose_sort_delete
-from .weighted_avg_pmt_terms_func import wa_pmt_terms
-from .supplier_pmt_terms_func import supplier_pmt_terms
+from .calc_weighted_average_pmt_terms import (
+    supplier_pmt_terms,
+    wa_pmt_terms
+)
 
 
 def find_accounts_to_filter_by(categories):
