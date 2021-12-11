@@ -540,15 +540,16 @@ samp {
 }
 #login-form-container #login-form {
   min-width: 550px;
+  max-width: 750px;
 }
-#login-form-container .form-group {
-  margin: 10px 0;
+#login-form-container .form-group-new {
+  margin: 20px 0;
 }
 #login-form-container .login-title {
   text-align: center;
   margin-bottom: 40px;
   font-weight: 600;
-  font-size: 32px;
+  font-size: 48px;
   color: #bbbe64;
 }
 #login-form-container input {
@@ -727,11 +728,19 @@ samp {
 @media only screen and (min-width: 1400px) {
   #upload-data {
     width: 75%;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
   }
 }
 
 .green {
   color: #bbbe64 !important;
+}
+
+.green:hover {
+  cursor: pointer;
+  color: #eecf6d !important;
 }
 
 .msg {

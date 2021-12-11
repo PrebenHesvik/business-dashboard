@@ -3,8 +3,10 @@ import dash_bootstrap_components as dbc
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
-from app import app
 from config import settings
+from flask_login import logout_user, current_user
+
+from app import app, login_manager
 
 # Import each individual page
 from views import (
@@ -12,8 +14,7 @@ from views import (
     file_upload,
     account,
     supplier,
-    # production,
-    # login,
+    login,
     # admin
 )
 
@@ -54,7 +55,9 @@ def toggle_active_links(pathname):
 def render_page_content(pathname):
     """Renders page content according to the link the user clicks"""
     match pathname:
-        case "/" | "/login" | "/page-1":
+        case "/" | "/login":
+            return login.layout
+        case "/page-1":
             return main.layout
         case "/page-2":
             return account.layout

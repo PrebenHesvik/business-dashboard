@@ -34,11 +34,17 @@
 
   @include breakpoint(viewport-14) {
     width: 75%;
+    align-self: center;
   }
 }
 
 .green {
   color: $color-5 !important;
+}
+
+.green:hover {
+  cursor: pointer;
+  color: $color-7 !important;
 }
 
 .msg {

@@ -12,8 +12,6 @@ header = html.H1('Last opp CSV eller XLS', className='upload-header')
 
 files = [
     'Transaksjoner',
-    'Kontrakter',
-    'iNetto produksjonsdata',
     'Leverandørliste'
 ]
 
@@ -35,7 +33,7 @@ select_file = radio_check(
 upload = dcc.Upload(
     id='upload-data',
     children=html.Div(
-        ['Drag and Drop or ', html.A('Select File', className='green')]),
+        ['Dra og Slipp eller ', html.A('Velg Fil', className='green')]),
     # Allow multiple files to be uploaded
     multiple=True
 )
