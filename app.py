@@ -1,8 +1,4 @@
-import os
-import pathlib
 import dash_bootstrap_components as dbc
-import numpy as np
-import pandas as pd
 from dash import Dash
 from flask import Flask
 from sqlalchemy.engine.reflection import Inspector
@@ -39,18 +35,17 @@ db = SQLAlchemy(app.server)
 db.init_app(app.server)
 engine = create_engine(settings.sqlalchemy_database_uri)
 
-
+# Create table and an admin at start-up if not present already
 inspector = Inspector.from_engine(engine)
 if not inspector.get_table_names():
     from users_mgt import create_user_table
     create_user_table()
-    print('New usertable has been created.')
+    print('New user-table has been created.')
 
 inspector = Inspector.from_engine(engine)
 if 'user' in inspector.get_table_names():
     from users_mgt import show_users
     users = show_users()
-    print(users, inspector.get_table_names())
     if settings.admin not in users:
         from users_mgt import add_user
         add_user(settings.admin, settings.admin_password)
@@ -64,15 +59,13 @@ from users_mgt import User as base
 
 
 class User(UserMixin, base):
-    """Create User class with UserMixin"""
+    """
+    Create User class with UserMixin. 
+    Used for login-functionality.
+    """
     pass
 
 
-print('We are still ok')
-
-
-login_manager.user_loader
-
-
+@login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))

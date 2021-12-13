@@ -1,9 +1,6 @@
-from sqlalchemy import Table
+from sqlalchemy import Table, text
 from sqlalchemy.orm.session import sessionmaker
-
-#from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash
-from flask_login import UserMixin
 from app import db, engine
 
 
@@ -28,19 +25,24 @@ def create_user_table():
 def add_user(email, password):
     hashed_password = generate_password_hash(password, method="sha256")
     ins = User_tbl.insert().values(email=email, password=hashed_password)
-    conn = engine.connect()
-    conn.execute(ins)
-    conn.close()
+    with engine.connect() as conn:
+        conn.execute(ins)
 
 
 def del_user(email):
     delete = User_tbl.delete().where(User_tbl.c.email == email)
-    conn = engine.connect()
-    conn.execute(delete)
-    conn.close()
+    with engine.connect() as conn:
+        conn.execute(delete)
 
 
 def show_users():
+    with engine.connect() as conn:
+        results = conn.execute(text('SELECT email FROM user')).fetchall()
+        results = [result.email for result in results]
+        return results
+
+
+def show_users2():
     Session = sessionmaker(bind=engine)
     session = Session()
 

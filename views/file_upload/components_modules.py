@@ -10,6 +10,7 @@ from components import (
 # components
 header = html.H1('Last opp CSV eller XLS', className='upload-header')
 
+# Files available for user upload
 files = [
     'Transaksjoner',
     'Leverandørliste'

@@ -1,16 +1,13 @@
 import base64
 import pandas as pd
 import numpy as np
-import datetime as dt
-import io
 import traceback
-from calendar import monthrange
-import pathlib
 
 # dash libs
 import dash
 import dash_bootstrap_components as dbc
 from dash import dcc, html
+from dash.dependencies import Input, Output, State
 
 from plotly_chart_generator import (
     bar_chart,
@@ -27,18 +24,16 @@ from chart_configs import (
 from app import app
 
 # components
-from dash.dependencies import Input, Output, State
+from .components_modules import layout
 
 # functions
 from functions.clean_data_files import (
-    clean_transactions,
-    import_supplier_list,
+    import_and_clean_transactions,
+    import_and_clean_supplier_list,
 )
 
-from .components_modules import layout
 
-
-def return_errors(error_list):
+def return_errors(error_list: list) -> html.Div:
 
     error = html.H5('ERROR!', className='msg msg__error')
     msg = html.H5('Excelarket mangler følgende kolonner: ',
@@ -58,7 +53,12 @@ def return_errors(error_list):
     return html.Div([error, msg, list_group], className='error-div')
 
 
-def return_success(data, category):
+def return_success(data: pd.DataFrame | dict, category: str) -> html.Div:
+    """
+    Returns an html Div with a message and a chart if category is equeal 
+    to 'Transaksjoner'. If category is equal to 'Leverandørliste' a
+    html.Div with a success message is returned. 
+    """
     msg = html.H5('VELLYKKET', className='msg msg__success')
 
     if category == 'Transaksjoner':
@@ -76,32 +76,33 @@ def return_success(data, category):
         layout = chart_styles(
             title=title,
             color_palette=single_color,
-            showlegend=False,
             **common_layout_args
         )
 
         traces = bar_chart(ser_df)
         fig = display_chart(traces=traces, layout=layout)
         chart = dcc.Graph(figure=fig)
-
         return html.Div([msg, chart], className='error-div')
-
-    elif category in ['Kontrakter', 'Leverandørliste', 'iNetto produksjonsdata']:
-        return html.Div([msg], className='error-div')
+    return html.Div([msg], className='error-div')
 
 
-PATH = pathlib.Path(__file__).parent
-base_dir = pathlib.Path(__file__).parent.parent.parent
-
-
-def parse_contents(category, contents, filename, date):
+def parse_contents(category: str, contents: str, filename: str, date) -> function:
     content_type, content_string = contents.split(',')
     decoded = base64.b64decode(content_string)
     ctx = dash.callback_context
     if ctx.triggered[0]['prop_id'] != 'select-data.value':
         try:
-            if category == 'Transaksjoner':
-                data = clean_transactions(filename, decoded)
+            if category == 'Leverandørliste':
+                data = import_and_clean_supplier_list(filename, decoded)
+                if isinstance(data, list):
+                    return return_errors(data)
+                np.save('datasets/payment-terms.npy', data)
+
+            elif category == 'Transaksjoner':
+                # Returns a DataFrame if file content is
+                # is valid, else returns a list of
+                # missing columns
+                data = import_and_clean_transactions(filename, decoded)
                 if isinstance(data, list):
                     return return_errors(data)
 
@@ -114,18 +115,11 @@ def parse_contents(category, contents, filename, date):
                 df = df.last('5Y').reset_index()
                 df.to_parquet(current_data_path)
 
-            elif category == 'Leverandørliste':
-                data = import_supplier_list(filename, decoded)
-                if isinstance(data, list):
-                    return return_errors(data)
-                else:
-                    np.save('datasets/payment-terms.npy', data)
-
         except Exception as e:
             print(e)
             print(traceback.print_exc())
             return html.Div(
-                [
+                children=[
                     'There was an error processing this file.',
                     html.P(e),
                     html.P(traceback.print_exc()),
@@ -140,7 +134,7 @@ def parse_contents(category, contents, filename, date):
                 Input('upload-data', 'contents')],
                [State('upload-data', 'filename'),
                 State('upload-data', 'last_modified')])
-def update_output(category, list_of_contents, list_of_names, list_of_dates):
+def update_output(category: str, list_of_contents, list_of_names, list_of_dates):
     if list_of_contents is not None:
         return [
             parse_contents(category, c, n, d) for c, n, d in

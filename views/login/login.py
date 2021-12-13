@@ -7,60 +7,22 @@ from app import app, User
 from flask_login import login_user, confirm_login
 from werkzeug.security import check_password_hash
 
-# components
-title = html.H1("Velkommen til Business Dashboard", className="login-title")
+#from .components_modules import layout
+from components.simple_login_form import simple_login_form
 
-email = html.Div(
-    [
-        #dbc.Label("Email", className="form-label", color="white", width=6),
-        dbc.Input(type="email", placeholder="Email", id="email-box"),
-    ],
-    className="form-group-new",
-)
-
-password = html.Div(
-    [
-        #dbc.Label("Password", className="form-label", color="white", width=6),
-        dbc.Input(type="password", placeholder="Enter password", id="pwd-box"),
-    ],
-    className="form-group-new",
-)
-
-btn_submit = dbc.Button(
-    "Logg inn", className="form-button", n_clicks=0,
-    id="login-button",
-)
-button = html.Div(
-    [
-        btn_submit
-    ],
-    className="d-grid gap-2",
-)
-
-msg_field = html.Div(children="", id="output-state")
-
-# modules
-login_form = dbc.Form(
-    [title, email, password, button, msg_field],
-    id="login-form",
-)
-
-login_form_row = dbc.Row([login_form], id="login-form-container")
 
 # layout
-layout = html.Div([dcc.Location(id="url_login", refresh=True), login_form_row])
-
-print(type(User))
-print(User)
-User.query.filter_by(email='admin').first()
+login_form = simple_login_form('Velkommen til Business Dashboard')
+layout = html.Div([dcc.Location(id="url_login", refresh=True), login_form])
 
 
 @app.callback(
     Output("url_login", "pathname"),
-    [Input("login-button", "n_clicks")],
-    [State("email-box", "value"), State("pwd-box", "value")],
+    [Input("login-btn", "n_clicks")],
+    [State("email-input", "value"), State("password-input", "value")],
 )
 def login(n_clicks, email, password):
+    """Logs user into the site"""
     user = User.query.filter_by(email=email).first()
     if user and check_password_hash(user.password, password):
         login_user(user)
@@ -69,28 +31,11 @@ def login(n_clicks, email, password):
 
 @app.callback(
     Output("output-state", "children"),
-    [Input("login-button", "n_clicks")],
-    [State("email-box", "value"), State("pwd-box", "value")],
+    [Input("login-btn", "n_clicks")],
+    [State("email-input", "value"), State("password-input", "value")],
 )
 def login_message(n_clicks, email, password):
-    """
-    Gives a message to the user if the login credentials
-    typed in is wrong.
-
-    Parameters
-    ----------
-    n_clicks : [type]
-        [description]
-    email : [type]
-        [description]
-    password : [type]
-        [description]
-
-    Returns
-    -------
-    [type]
-        [description]
-    """
+    """Displays a message if the login credentials are wrong"""
     if n_clicks <= 0:
         return ""
     user = User.query.filter_by(email=email).first()

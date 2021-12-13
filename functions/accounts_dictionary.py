@@ -1,5 +1,5 @@
 def accounts_dict():
-    acct_dict = {
+    return {
         'Direct Materials': {
             'Additives': {
                 'Kjøp Tilsettingsmaterialer': 4022,
@@ -290,12 +290,3 @@ def accounts_dict():
             },
         },
     }
-
-    return acct_dict
-
-
-# 'Capital Expenditures': {
-#     'Anlegg u/ utførelse Skurve': 1268,
-#     'FoU-arbeid': 7650,
-#     'Anlegg u/ utførelse Hj.v†g': 1263,
-# }

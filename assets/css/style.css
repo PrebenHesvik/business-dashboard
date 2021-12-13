@@ -540,19 +540,16 @@ samp {
 }
 #login-form-container #login-form {
   min-width: 550px;
-  max-width: 750px;
-}
-#login-form-container .form-group-new {
-  margin: 20px 0;
+  max-width: 650px;
 }
 #login-form-container .login-title {
   text-align: center;
   margin-bottom: 40px;
   font-weight: 600;
-  font-size: 48px;
+  font-size: 41px;
   color: #bbbe64;
 }
-#login-form-container input {
+#login-form-container input, #login-form-container input:active {
   background: #3f4351;
   color: #fff;
   font-size: 20px;
@@ -560,20 +557,27 @@ samp {
   -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
           box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
 }
+#login-form-container input:active, #login-form-container input:focus {
+  background: #3f4351 !important;
+  color: #fff !important;
+  font-size: 20px !important;
+  border: none !important;
+  -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3) !important;
+          box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3) !important;
+}
 #login-form-container label {
   font-size: 20px;
   font-weight: 600;
   padding-left: 0;
 }
-#login-form-container .form-button {
-  background: #bbbe64;
+#login-form-container #login-btn {
   border: none;
   -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
           box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
   color: #fff;
   font-weight: 600;
   font-size: 20px;
-  margin-top: 30px;
+  margin-top: 15px;
   background: #5f6128;
   background: radial-gradient(ellipse at center, #5f6128 0%, rgba(95, 97, 40, 0.2) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="$start-color", endColorstr="$end-color",GradientType=1 );
@@ -903,37 +907,27 @@ samp {
   width: 100%;
 }
 #user-registration form {
-  width: 100%;
+  width: 98%;
+  padding-left: 0;
+  padding-right: 12px;
   display: -webkit-box;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  -moz-justify-content: "space-between";
-  justify-content: "space-between";
 }
-#user-registration .form-group {
-  width: 30%;
-  margin-right: 30px;
+#user-registration .form__inline--form-group {
+  margin-right: 10px;
 }
-#user-registration .form-group .form-control {
-  width: 100%;
+#user-registration .form-control {
   height: 45px;
   font-size: 18px;
   color: #fff !important;
   background: transparent;
   border: 1px solid #999999;
 }
-#user-registration .form-group label {
-  font-size: 20px;
-  font-weight: 600;
-  margin-left: -30px;
-  color: #fff;
-}
 #user-registration button {
-  margin-top: 45px;
-  width: 32%;
+  margin-top: 0;
+  width: 98% !important;
   height: 45px;
   border: none;
   -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
@@ -950,15 +944,15 @@ samp {
   width: 100%;
   margin-bottom: 75px;
 }
-#remove-user .col-8 {
+#remove-user #user-list-col {
   padding: 0px 35px 0 0 !important;
 }
-#remove-user .col-8 select {
+#remove-user #user-list-col select {
   margin-left: 0px !important;
   height: 45px;
-  font-size: 20px;
+  font-size: 18px;
   color: #fff !important;
-  border: 1px solid #999999;
+  border: 1px solid #999999 !important;
 }
 #remove-user .col-4 {
   padding: 0;
