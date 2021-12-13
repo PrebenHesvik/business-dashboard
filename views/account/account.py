@@ -1,3 +1,4 @@
+
 # dash libs
 from dash import dcc
 from dash.dependencies import Input, Output
@@ -75,28 +76,7 @@ def update_account_cat_4(cat_1, cat_2, cat_3):
      Input('account_cat_4', 'value')])
 def main_chart(years, locations, show, frequency,
                cat_1, cat_2, cat_3, cat_4):
-    """[summary]
-
-    :param years:
-        list of years - used to filter df
-    :type years:
-        list
-    :param locations:
-        list of locations - used to filter df
-    :type locations:
-        list
-    :param show:
-        [description]
-    :type show:
-        str
-    :param
-        frequency: [description]
-    :type
-        frequency: str
-    :return:
-        [description]
-    :rtype:
-        [type]
+    """
     """
 
     # filter dataframe

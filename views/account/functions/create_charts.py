@@ -12,6 +12,8 @@ from chart_configs import (
     common_layout_args,
     display_chart
 )
+
+
 def create_charts(chart_data):
     charts = []
     for frame, title in chart_data:
@@ -24,10 +26,7 @@ def create_charts(chart_data):
         )
 
         trace = bar_chart(df=frame)
-
         fig = display_chart(traces=trace, layout=layout)
-
         chart_obj = dbc.Col([dcc.Graph(figure=fig)], width=12)
-
         charts.append(chart_obj)
     return charts

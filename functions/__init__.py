@@ -1,4 +1,3 @@
 from .accounts_dictionary import accounts_dict
-from .clean_data_files import clean_transactions, clean_account_descriptions_and_add_cols
+from .clean_data_files import import_and_clean_transactions, clean_account_descriptions_and_add_cols
 from .filter_dataframe import filter_dataframe
-from .import_data import import_supplier_list

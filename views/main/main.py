@@ -1,24 +1,8 @@
-# dash libs
-from dash import dcc
 from dash.dependencies import Input, Output
-import dash_bootstrap_components as dbc
-
 from app import app
-
-from plotly_chart_generator import (
-    bar_chart,
-    line_chart,
-    chart_styles,
-)
-
-from chart_configs import (
-    single_color,
-    common_layout_args,
-    display_chart
-)
-
-from .components_and_modules import *
+from .components_and_modules import layout
 from . create_traces import create_traces
+from . create_fig import create_fig
 
 
 @ app.callback(
@@ -58,40 +42,7 @@ def create_charts(
 
     charts = []
     for chart in chart_data:
-
-        layout = chart_styles(
-            color_palette=single_color,
-            title=chart.title.upper(),
-            **common_layout_args
-        )
-
-        if chart_type == 'Linje' and chart.chart_type == 'both':
-            max_yaxis = chart.data.max().max() * 1.3
-            min_yaxis = chart.data.min().min() * 0
-            yaxis_range = [min_yaxis, max_yaxis]
-
-            layout['yaxis_autorange'] = False
-            layout['yaxis_range'] = yaxis_range
-
-            traces = line_chart(
-                chart.data,
-                line_smoothing=1,
-                marker_size=10,
-                mode='lines+markers'
-            )
-        else:
-            if chart.dynamic_height is True:
-                layout['height'] = chart_height
-                layout['yaxis_showgrid'] = False
-                layout['xaxis_showgrid'] = True
-
-            if chart.chart_type == 'bar':
-                traces = bar_chart(df=chart.data, orientation='h')
-            else:
-                traces = bar_chart(df=chart.data)
-
-        fig = display_chart(traces=traces, layout=layout)
-        fig_col = dbc.Col([dcc.Graph(figure=fig)], width=chart_sizes[0])
-        charts.append(fig_col)
+        fig = create_fig(chart, chart_type, chart_height, chart_sizes)
+        charts.append(fig)
 
     return charts

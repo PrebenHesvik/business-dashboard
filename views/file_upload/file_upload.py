@@ -86,7 +86,7 @@ def return_success(data: pd.DataFrame | dict, category: str) -> html.Div:
     return html.Div([msg], className='error-div')
 
 
-def parse_contents(category: str, contents: str, filename: str, date) -> function:
+def parse_contents(category: str, contents: str, filename):
     content_type, content_string = contents.split(',')
     decoded = base64.b64decode(content_string)
     ctx = dash.callback_context

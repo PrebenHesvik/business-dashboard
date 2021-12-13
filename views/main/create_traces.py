@@ -170,7 +170,6 @@ def create_traces(
         Trace(unique_suppliers, 'antall benyttede leverandører', 'both', False),
         Trace(weighted_avg_pmt_terms,
               'vektede betalingsbetingelser', 'both', False),
-        #Trace(rolling_spend_per_cat, 'Spend per kategori', 'both', False),
         Trace(supplier_spend, 'leverandører - spend', 'bar', True),
         Trace(supplier_invoices, 'leverandører - antall faktura', 'bar', True),
         Trace(category_spend, 'kategori - spend', 'bar', True),
