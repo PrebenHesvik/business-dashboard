@@ -12,3 +12,5 @@ Usage
 
     pip install requirements.txt
     uvicorn backend.main:app 
+
+.. image:: screenshot.png
