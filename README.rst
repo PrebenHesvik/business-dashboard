@@ -11,6 +11,9 @@ Usage
 .. code:: python
 
     pip install requirements.txt
-    uvicorn backend.main:app 
+    python index.py
+
+    // username: admin
+    // password: password
 
 .. image:: screenshot.png
