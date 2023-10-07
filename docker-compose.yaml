@@ -1,0 +1,11 @@
+# https://www.youtube.com/watch?v=YGrfexNwsFU
+  # minute 9.30
+
+services:
+  app:
+    build: .
+    container_name: business-dashboard
+    ports:
+      - 8050:8050
+    volumes:
+      - .:/app
